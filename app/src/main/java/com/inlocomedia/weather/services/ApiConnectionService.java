@@ -20,7 +20,7 @@ import okhttp3.Response;
  * Created by augusto on 20/01/16.
  */
 public class ApiConnectionService {
-    final private static String WEATHER_API_URL = "openweathermap.org/data/2.5/find";
+    final private static String WEATHER_API_URL = "openweathermap.org";
 
     final private static String WEATHER_APP_ID = "d5e5e7bf0036493556227d17d41219bd";
 
@@ -39,6 +39,9 @@ public class ApiConnectionService {
 
     public List<City> retrieveCities(String latitude, String longitude){
         HttpUrl httpUrl = new HttpUrl.Builder().scheme("http").host(WEATHER_API_URL)
+                .addPathSegment("data")
+                .addPathSegment("2.5")
+                .addPathSegment("find")
                 .addQueryParameter("lat", latitude)
                 .addQueryParameter("lon", longitude)
                 .addQueryParameter("cnt", String.valueOf(QUERIED_CITIES))
