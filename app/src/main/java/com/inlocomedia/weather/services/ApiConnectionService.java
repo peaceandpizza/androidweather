@@ -14,7 +14,6 @@ import java.util.List;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Created by augusto on 20/01/16.
@@ -29,11 +28,10 @@ public class ApiConnectionService {
     private static OkHttpClient okHttpClient;
 
     public OkHttpClient getClient(){
-        if(okHttpClient == null){
-            return new OkHttpClient();
-        }else{
-            return okHttpClient;
+        if(this.okHttpClient == null){
+            okHttpClient = new OkHttpClient();
         }
+        return this.okHttpClient;
     }
 
 
