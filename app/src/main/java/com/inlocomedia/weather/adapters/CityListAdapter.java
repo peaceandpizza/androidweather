@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.inlocomedia.weather.R;
+import com.inlocomedia.weather.WeatherDetailActivity;
 import com.inlocomedia.weather.models.City;
 import com.inlocomedia.weather.models.Weather;
 
@@ -44,12 +45,11 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent i = new Intent(view.getContext(), null);
+                        Intent i = new Intent(view.getContext(), WeatherDetailActivity.class);
                         i.putExtra("CITY_NAME", city.getName());
                         i.putExtra("CITY_MAXTEMP", city.getMaxTemperature());
                         i.putExtra("CITY_MINTEMP", city.getMinTemperature());
                         Weather weather = city.getWeather();
-                        i.putExtra("WEATHER_NAME", weather.getName());
                         i.putExtra("WEATHER_DESCRIPTION", weather.getDescription());
                         i.putExtra("WEATHER_ICON", weather.getIcon());
                         view.getContext().startActivity(i);

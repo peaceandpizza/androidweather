@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.inlocomedia.weather.adapters.CityListAdapter;
 import com.inlocomedia.weather.models.City;
@@ -24,13 +25,16 @@ public class CityListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_list);
 
-        String lat = "-8.0475458";
-        String lon = "-34.8769621";
+        if(savedInstanceState==null) {
 
-        FetchCityListAsync fetchCityListAsync = new FetchCityListAsync();
-        fetchCityListAsync.execute(lat, lon);
+            String lat = getIntent().getExtras().getString("LATITUDE");
+            String lon = getIntent().getExtras().getString("LONGITUDE");
 
-        adapterSetup();
+            FetchCityListAsync fetchCityListAsync = new FetchCityListAsync();
+            fetchCityListAsync.execute(lat, lon);
+
+            adapterSetup();
+        }
     }
 
     private void adapterSetup(){
@@ -46,6 +50,7 @@ public class CityListActivity extends AppCompatActivity {
     }
 
     private void notifyRecyclerView(){
+        findViewById(R.id.progressBar).setVisibility(View.GONE);
         cityAdapter.notifyDataSetChanged();
     }
 

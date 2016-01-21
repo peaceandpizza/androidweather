@@ -81,8 +81,8 @@ public class ApiConnectionService {
             placeholder.setMinTemperature(node.getJSONObject("main").getString("temp_min"));
             JSONObject weatherNode = node.getJSONArray("weather").getJSONObject(0);
             Weather placeholderWeather = new Weather();
-            placeholderWeather.setDescription(weatherNode.getString("description"));
-            placeholderWeather.setName(weatherNode.getString("name"));
+            String description = weatherNode.getString("description");
+            placeholderWeather.setDescription(description.substring(0,1).toUpperCase() + description.substring(1));
             placeholderWeather.setIcon(weatherNode.getString("icon"));
             placeholder.setWeather(placeholderWeather);
         } catch (JSONException e) {
