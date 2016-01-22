@@ -29,6 +29,8 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
     @Override
     public CityListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+
+        //Inicializa o layout de cada item da RecyclerView com o layout city_list_item.xml
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.city_list_item, parent, false);
         ViewHolder vh = new ViewHolder(v);
 
@@ -38,13 +40,23 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
     @Override
     public void onBindViewHolder(CityListAdapter.ViewHolder holder, int position) {
 
+        //Pega um objeto CITY para colocar as informações no viewholder
+
         final City city = cities.get(position);
         holder.cityName.setText(city.getName());
 
+
+        //Associa a ação de cada item do adapter
         holder.itemView.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        /*
+                        Cada item tem um intent associado, é necessário colocar as informações
+                        que devem ser passadas para a próxima tela.
+                         */
+
                         Intent i = new Intent(view.getContext(), WeatherDetailActivity.class);
                         i.putExtra("CITY_NAME", city.getName());
                         i.putExtra("CITY_MAXTEMP", city.getMaxTemperature());

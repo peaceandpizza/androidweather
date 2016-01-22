@@ -26,10 +26,12 @@ public class CityListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_city_list);
 
         if(savedInstanceState==null) {
-
+            //Pega as informações que foram passadas pelo mapa na tela anterior pelo intent
             String lat = getIntent().getExtras().getString("LATITUDE");
             String lon = getIntent().getExtras().getString("LONGITUDE");
 
+
+            //Inicia a atividade assíncrona para puxar as informações da API
             FetchCityListAsync fetchCityListAsync = new FetchCityListAsync();
             fetchCityListAsync.execute(lat, lon);
 
@@ -37,6 +39,8 @@ public class CityListActivity extends AppCompatActivity {
         }
     }
 
+
+    //Método para inicialização do adapter que vai alimentar a RecyclerView
     private void adapterSetup(){
 
         RecyclerView cityListView = (RecyclerView) this.findViewById(R.id.cityList);
@@ -49,6 +53,8 @@ public class CityListActivity extends AppCompatActivity {
 
     }
 
+
+    //Método de callback da atividade assíncrona
     private void notifyRecyclerView(){
         findViewById(R.id.progressBar).setVisibility(View.GONE);
         cityAdapter.notifyDataSetChanged();
@@ -62,12 +68,19 @@ public class CityListActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+
+            /*
+            Ao terminar a chamada da API, esse método é chamado e irá notificar a classe pai
+            que deve atualizar as informações do adapter e esconder a progressbar
+             */
             super.onPostExecute(aVoid);
             notifyRecyclerView();
         }
 
         @Override
         protected Void doInBackground(String... params) {
+
+            //Chama o serviço de comunicação com a API
             ApiConnectionService apiProvider = new ApiConnectionService();
             List<City> citiesFromApi = apiProvider.retrieveCities(params[0], params[1]);
             cities.addAll(citiesFromApi);

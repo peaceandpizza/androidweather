@@ -13,6 +13,11 @@ public class WeatherApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+
+        /*
+           * Inicializa a biblioteca de imagens
+           * Isso é feito no Application para que seja visível em todo o código
+         */
         Fresco.initialize(WeatherApplication.this);
 
     }

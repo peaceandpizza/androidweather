@@ -20,8 +20,8 @@ public class WeatherDetailActivity extends AppCompatActivity {
 
         weatherDescription= (TextView) findViewById(R.id.weatherDescription);
         cityName = (TextView) findViewById(R.id.cityName);
-        minTemp = (TextView) findViewById(R.id.maxTemp);
-        maxTemp = (TextView) findViewById(R.id.minTemp);
+        minTemp = (TextView) findViewById(R.id.minTemp);
+        maxTemp = (TextView) findViewById(R.id.maxTemp);
 
         weatherIcon  = (SimpleDraweeView) findViewById(R.id.weatherIcon);
 
@@ -35,6 +35,7 @@ public class WeatherDetailActivity extends AppCompatActivity {
         minTemp.setText(bundle.getString("CITY_MINTEMP"));
         maxTemp.setText(bundle.getString("CITY_MAXTEMP"));
 
+        //Inicia uma chamada assíncrona para pegar o ícone da previsão do tempo
         Uri uri = Uri.parse("http://openweathermap.org/img/w/" + bundle.getString("WEATHER_ICON") + ".png");
         weatherIcon.setImageURI(uri);
 

@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,7 +21,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private final int MY_PERMISSIONS_REQUEST_GET_LOCATION = 1;
     private GoogleMap mMap;
 
     @Override
@@ -33,16 +33,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_GET_LOCATION);
-        }
 
 
-
-
+        //Adiciona uma ação associada ao clique do usuário no floating action button
         findViewById(R.id.searchButton).setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -54,6 +47,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
         );
+
+        //Adiciona uma ação para fechar o tooltip do mapa
         final View tooltip = findViewById(R.id.tooltip);
         findViewById(R.id.closeTooltip).setOnClickListener(
                 new View.OnClickListener() {
@@ -63,32 +58,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 }
         );
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_GET_LOCATION: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    double longitude = location.getLongitude();
-                    double latitude = location.getLatitude();
-                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-                            new LatLng(latitude, longitude), 15);
-                    mMap.animateCamera(cameraUpdate);
-
-
-                } else {
-
-
-                }
-                return;
-            }
-
-        }
     }
 
 

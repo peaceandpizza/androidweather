@@ -28,6 +28,8 @@ public class ApiConnectionService {
     private static OkHttpClient okHttpClient;
 
     public OkHttpClient getClient(){
+
+        //Evita a criação de múltiplos objetos de cliente do OkHTTP
         if(this.okHttpClient == null){
             okHttpClient = new OkHttpClient();
         }
@@ -36,6 +38,8 @@ public class ApiConnectionService {
 
 
     public List<City> retrieveCities(String latitude, String longitude){
+
+        //Constrói a URL de chamada da API
         HttpUrl httpUrl = new HttpUrl.Builder().scheme("http").host(WEATHER_API_URL)
                 .addPathSegment("data")
                 .addPathSegment("2.5")
@@ -51,6 +55,13 @@ public class ApiConnectionService {
                 .build();
 
         try {
+
+            /*
+            Recebe a resposta da API e adiciona num ArrayList que vai ser usado para passar as
+            informações para o Adapter
+             */
+
+
             JSONArray cities = new JSONObject(getClient().newCall(request).execute().body().string()).getJSONArray("list");
 
             List<City> cityList = new ArrayList<>();
@@ -74,6 +85,7 @@ public class ApiConnectionService {
 
     public City parseJsonIntoCity(JSONObject node, City placeholder){
 
+        //Parsing das informações que vem da API
         try {
             placeholder.setId(node.getString("id"));
             placeholder.setName(node.getString("name"));
